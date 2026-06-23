@@ -20,7 +20,7 @@ app.post("/whatsapp", async (req, res) => {
 
   try {
     // Call your existing Lovable chatbot
-    const chatRes = await fetch("https://smile-helper-bot.lovable.app", {
+    const chatRes = await fetch("https://smile-helper-bot.lovable.app/api/public/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ messages: sessions[from] }),
