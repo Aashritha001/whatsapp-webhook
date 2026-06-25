@@ -44,6 +44,11 @@ app.post("/whatsapp", async (req, res) => {
 function buildReply(data) {
   let text = data.message || "I'm here to help!";
 
+  // Fix "button" references to "link"
+  text = text.replace(/button below/gi, "link below");
+  text = text.replace(/Book button/gi, "link");
+  text = text.replace(/Call button/gi, "link");
+
   if (data.actions?.includes("book") && data.meta?.booking_url) {
     text += `\n\n📅 Book online: ${data.meta.booking_url}`;
   }
@@ -57,7 +62,7 @@ function buildReply(data) {
     text += `\n\nℹ️ NHS info: https://www.nhs.uk/nhs-services/dentists/`;
   }
   if (data.suggestions?.length) {
-    text += "\n\n💬 You can also ask:\n" + data.suggestions.map((s, i) => `${i + 1}. ${s}`).join("\n");
+    text += "\n\n💬 Reply with a number to choose:\n" + data.suggestions.map((s, i) => `${i + 1}. ${s}`).join("\n");
   }
 
   return text;
